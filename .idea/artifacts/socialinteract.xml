@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="socialinteract">
+    <output-path>$PROJECT_DIR$/../mctst/plugins</output-path>
+    <root id="archive" name="socialinteract.jar">
+      <element id="module-output" name="SocialInteract" />
+    </root>
+  </artifact>
+</component>
