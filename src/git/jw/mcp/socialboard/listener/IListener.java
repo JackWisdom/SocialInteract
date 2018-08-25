@@ -19,6 +19,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -76,7 +77,11 @@ public class IListener implements Listener,DataCenter {
             td.removeTheme(theme);
             event.getWhoClicked().closeInventory();
             event.getWhoClicked().sendMessage("§c删除成功");
-
+            File f=new File(IPlugin.bean.getDataFolder(),index+File.pathSeparator+owner+"."+origin+".json");
+            System.out.println("Detecting File"+f.getPath()+"|"+f.exists());
+            if(f.exists()){
+                f.delete();
+            }
             if(indexs.get(index).players.get(owner)!=null){
                 int limit=indexs.get(index).players.get(owner)-1;
                 if(limit<=0){
@@ -160,7 +165,9 @@ public class IListener implements Listener,DataCenter {
         }
        ButtonType type= i.getButtonType(event.getSlot(),event.getInventory());
         Inventory inv=event.getInventory();
+        System.out.println(type);
        if(type==ButtonType.Next)
+
            i.NextPage(inv);
        else if(type==ButtonType.Previous)
            i.PrePage(inv);

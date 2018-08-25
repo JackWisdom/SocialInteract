@@ -56,12 +56,13 @@ public class ThemeData {
         if(page<=0){
             return null;
         }
-        int end=row*9*page;
-        int start=row*9*(page-1)+1;
-
+        int end=(row-1)*9*page;
+        int start=(row-1)*9*(page-1)+1;
+        System.out.println(page+"|"+start+"|"+end+"|"+getSize());
         if(getSize()<start){
             return null;
         }
+
         int tmp=start;
         ArrayList<Theme> list=new ArrayList<>();
         while (tmp<=getSize()&&tmp<=end){

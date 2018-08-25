@@ -1,11 +1,7 @@
 <component name="libraryTable">
   <library name="spigot-latest">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../mctst/1.12.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$PROJECT_DIR$/../mctst/1.12.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

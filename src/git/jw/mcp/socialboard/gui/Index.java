@@ -31,7 +31,7 @@ public class Index{
         this.page=1;
          this.title=title;
         players=new HashMap<>();
-        item_end=(row-1)*9;
+        item_end=(row-1)*9-1;
         data=new ThemeData();
     }
     public HashMap getPlayers(){
@@ -40,11 +40,13 @@ public class Index{
     public Inventory createInv(){
     Inventory inv=    Bukkit.createInventory(new ThemeInvHolder(),row*9,title);
     addButtons(inv);
-    if(getData().getThemeByPage(page,row-1)==null){
+    if(getData().getThemeByPage(page,row)==null){
         return inv;
     }
-    for(Theme t:getData().getThemeByPage(page,row-1)){
-        inv.addItem(t.getItemStack());
+    int i=0;
+    for(Theme t:getData().getThemeByPage(page,row)){
+        inv.setItem(i,t.getItemStack());
+        i=i+1;
     }
     return inv;
     }
@@ -54,17 +56,24 @@ public class Index{
 
     public void reflush(int page,Inventory inv){
        ArrayList<Theme> items= data.getThemeByPage(page,row);
+
        int tmp=0;
+       int size=0;
+       if(items!=null){
+           size=items.size();
+       }
        while (tmp<=item_end){
-           tmp=tmp+1;
-           if(tmp>=items.size()){
+           if(tmp>=size){
                inv.setItem(tmp,null);
+               tmp=tmp+1;
                continue;
            }
-           inv.setItem(tmp,items.get(tmp-1).getItemStack());
+           inv.setItem(tmp,items.get(tmp).getItemStack());
+           tmp=tmp+1;
        }
     }
     public void NextPage(Inventory inv){
+        System.out.println("StartNextPage");
         page=page+1;
         reflush(page,inv);
     }
@@ -78,13 +87,9 @@ public class Index{
     }
     private void addButtons(Inventory inv){
         int base=(row-1)*9-1;
-        if(getPage()!=1){
             inv.setItem(base+1,new Previous().getItemStack());
-        }
         inv.setItem(base+5,new New().getItemStack());
-        if(isFull(inv)){
             inv.setItem(base+9,new Next().getItemStack());
-        }
     }
     private boolean isFull(Inventory inv){
         int max=(row-1)*9;
@@ -107,12 +112,14 @@ public class Index{
         }
         int solt=(s+1)%9;
         //取余数
+       // System.out.println(solt+"|"+isFull(inv));
+       // System.out.println(page+"|");
         if(isLastRow(getRow(s))){
-            if(solt==0&&getPage()!=1)
+            if(solt==1&&getPage()!=1)
                 return ButtonType.Previous;
             else if (solt==5)
                 return ButtonType.New;
-            else if (solt==8&&isFull(inv))
+            else if (solt==0&&isFull(inv))
                 return ButtonType.Next;
         }
 
