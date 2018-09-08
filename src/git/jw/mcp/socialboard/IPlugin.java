@@ -79,8 +79,17 @@ public static IPlugin bean;
                     }
                     try {
                        Gson gson=new Gson();
-                       Theme themes=gson.fromJson(new InputStreamReader(new FileInputStream(theme)),Theme.class);
+                       FileInputStream fr=new FileInputStream(theme);
+                       InputStreamReader in=new InputStreamReader(fr);
+                       Theme themes=gson.fromJson(in,Theme.class);
                         index.getData().addTheme( themes);
+                        try {
+                            in.close();
+                            fr.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                         if(index.players.get(themes.owner)==null){
                             index.players.put(themes.owner,1);
                         }else {

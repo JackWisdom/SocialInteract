@@ -77,7 +77,7 @@ public class IListener implements Listener,DataCenter {
             td.removeTheme(theme);
             event.getWhoClicked().closeInventory();
             event.getWhoClicked().sendMessage("§c删除成功");
-            File f=new File(IPlugin.bean.getDataFolder(),index+File.pathSeparator+owner+"."+origin+".json");
+            File f=new File(IPlugin.bean.getDataFolder(),index+"/"+owner+"."+origin+".json");
             System.out.println("Detecting File"+f.getPath()+"|"+f.exists());
             if(f.exists()){
                 f.delete();

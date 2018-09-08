@@ -14,11 +14,11 @@ public class ThemeData {
         themes=new ArrayList<>();
     }
     public void removeTheme(Theme theme){
-        themes.remove(theme);
+       themes.remove(theme);
     }
     public void stickTheme(Theme theme){
          theme.setStick(!theme.isStick);
-        themes.remove(theme);
+        removeTheme(theme);
         if(theme.isStick){
             themes.add(0,theme);
         }else {
