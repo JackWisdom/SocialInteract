@@ -10,7 +10,9 @@ import git.jw.mcp.socialboard.inv.Iholder;
 import git.jw.mcp.socialboard.inv.ThemeInvHolder;
 import git.jw.mcp.socialboard.until.ButtonType;
 import git.jw.mcp.socialboard.until.ThemeData;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,6 +20,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -137,6 +140,10 @@ public class IListener implements Listener,DataCenter {
                 return;
             }
             event.getPlayer().sendMessage("§a发布成功");
+            if(Bukkit.getPlayer(theme.getOwner()).isOnline()){
+                Bukkit.getPlayer(theme.getOwner()).sendMessage("§a"+event.getPlayer().getName()+"回复了您的帖子");
+                Bukkit.getPlayer(theme.getOwner()).playSound(Bukkit.getPlayer(theme.getOwner()).getLocation(), Sound.ENTITY_PLAYER_LEVELUP,1,1);
+            }
             theme.getCommits().put(name,msg);
             mode2.remove(name);
             return;
@@ -236,7 +243,17 @@ public class IListener implements Listener,DataCenter {
             }
             this.msg.put(name,title);
             event.getPlayer().sendMessage("§a您的内容为:"+title+"\n正在为您发布帖子中");
-            int limit=IPlugin.bean.getConfig().getInt("players."+event.getPlayer().getName());
+            int limit=0;
+            for(PermissionAttachmentInfo info:event.getPlayer().getEffectivePermissions()){
+                if(info.getPermission().startsWith("pcb.chat.")){
+                   try{
+                       System.out.println(info.getPermission().substring(0,"pcb.chat.".length()));
+                       limit=Integer.parseInt(info.getPermission().substring(0,"pcb.chat.".length()));
+                   }catch (Exception e){
+
+                   }
+                }
+            }
             if(limit<=1){
                 limit=1;
             }

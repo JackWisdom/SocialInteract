@@ -1,6 +1,6 @@
 name: SocialBoard
 main: git.jw.mcp.socialboard.IPlugin
-version: 0.2
+version: 0.3
 description: "互动板插件用于玩家间的互动交流，可以在各个板块发布主  题，以及回复其他人的主题。管理员可以进行删除主题，置  顶主题等操作"
 commands:
    pcb:
